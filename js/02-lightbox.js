@@ -39,7 +39,9 @@ function ongalleryContainerClick(evt) {
   //      }
   //    });
 }
-let lightbox = new SimpleLightbox(".gallery__item");
-lightbox.options({ showImageNumber: false });
+let lightbox = new SimpleLightbox(".gallery__item", {
+  captionsData: "alt",
+  captionDelay: 250,
+});
 console.log();
 console.log(galleryItems);
