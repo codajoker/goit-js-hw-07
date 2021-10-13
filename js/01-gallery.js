@@ -9,11 +9,11 @@ function makeImageCard(imgs) {
   return imgs
     .map(({ preview, original, description }) => {
       return `<div class="gallery__item">
-        <a class="gallery__link" href="large-image.jpg">
+        <a class="gallery__link" href=${original}>
           <img
             class="gallery__image"
             src=${preview}
-            data-source="large-image.jpg"
+            data-source=${original}
             alt=${description}
           />
         </a>
@@ -21,13 +21,25 @@ function makeImageCard(imgs) {
     })
     .join("");
 }
+galleryContainer.addEventListener("click", ongalleryContainerClick);
 
-const links = document.querySelectorAll(".gallery__link");
-const arrayLinks = [...links];
+function ongalleryContainerClick(evt) {
+  evt.preventDefault();
+  if (evt.target.nodeName !== "IMG") {
+    return;
+  }
+  galleryItems.map((item) => {
+    if (item.original === evt.target.dataset.source) {
+      const instance = basicLightbox.create(
+        ` <img src=${item.original} width="800" height="600">`
+      );
 
-arrayLinks.map((link) => {
-  console.log(link);
-  link.addEventListener("click", (e) => {
-    e.preventDefault();
+      instance.show();
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          instance.close();
+        }
+      });
+    }
   });
-});
+}
