@@ -22,7 +22,17 @@ function makeImageCard(imgs) {
     .join("");
 }
 galleryContainer.addEventListener("click", ongalleryContainerClick);
+function closeEscapeWindow () {
+   document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          instance.close();
+        }
+      });
+}
 
+function removeListenerEscape () {
+   document.removeEventListener("keydown", closeEscapeWindow();
+}
 function ongalleryContainerClick(evt) {
   evt.preventDefault();
   if (evt.target.nodeName !== "IMG") {
@@ -35,11 +45,8 @@ function ongalleryContainerClick(evt) {
       );
 
       instance.show();
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-          instance.close();
-        }
-      });
+      closeEscapeWindow()
+     removeListenerEscape()
     }
   });
 }
