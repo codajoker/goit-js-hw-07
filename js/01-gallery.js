@@ -1,9 +1,11 @@
 import { galleryItems } from "./gallery-items.js";
-// Change code below this line
+
 const galleryContainer = document.querySelector(".gallery");
 const imagesMarkup = makeImageCard(galleryItems);
 
 galleryContainer.insertAdjacentHTML("beforeend", imagesMarkup);
+
+let instance = null; // Define instance at a broader scope
 
 function makeImageCard(imgs) {
   return imgs
@@ -21,30 +23,21 @@ function makeImageCard(imgs) {
     })
     .join("");
 }
-galleryContainer.addEventListener("click", ongalleryContainerClick);
-function closeEscapeWindow () {
-   document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-          instance.close();
-        }
-      });
-}
 
 function onKeydownEscape(event) {
-    event.preventDefault();
-
-    if (event.code === 'Escape') {
-        instance.close();
+  if (event.code === "Escape") {
+    if (instance) {
+      instance.close();
     }
+  }
 }
 
 function enableEscapeListener() {
-    document.addEventListener('keydown', onKeydownEscape);
+  document.addEventListener('keydown', onKeydownEscape);
 }
 
-
-function removeEscapeListener () {
-   document.removeEventListener("keydown", onKeydownEscape);
+function removeEscapeListener() {
+  document.removeEventListener("keydown", onKeydownEscape);
 }
 
 function ongalleryContainerClick(evt) {
@@ -52,9 +45,9 @@ function ongalleryContainerClick(evt) {
   if (evt.target.nodeName !== "IMG") {
     return;
   }
- galleryItems.map((item) => {
+  galleryItems.map((item) => {
     if (item.original === evt.target.dataset.source) {
-      const instance = basicLightbox.create(
+      instance = basicLightbox.create(
         `<img src=${item.original} width="800" height="600">`,
         {
           closable: false,
@@ -69,3 +62,5 @@ function ongalleryContainerClick(evt) {
     }
   });
 }
+
+galleryContainer.addEventListener("click", ongalleryContainerClick);
