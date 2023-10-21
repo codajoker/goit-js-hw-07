@@ -31,7 +31,7 @@ function closeEscapeWindow () {
 }
 
 function removeListenerEscape () {
-   document.removeEventListener("keydown", closeEscapeWindow();
+   document.removeEventListener("keydown", closeEscapeWindow());
 }
 function ongalleryContainerClick(evt) {
   evt.preventDefault();
