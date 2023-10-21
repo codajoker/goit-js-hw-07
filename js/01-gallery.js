@@ -52,19 +52,20 @@ function ongalleryContainerClick(evt) {
   if (evt.target.nodeName !== "IMG") {
     return;
   }
-  galleryItems.map((item) => {
+ galleryItems.map((item) => {
     if (item.original === evt.target.dataset.source) {
       const instance = basicLightbox.create(
-        ` <img src=${item.original} width="800" height="600">`
-      ),{
-            closable: false,
-            onClose: () => {
-                removeEscapeListener();
-            }
+        `<img src=${item.original} width="800" height="600">`,
+        {
+          closable: false,
+          onClose: () => {
+            removeEscapeListener();
+          }
         }
+      );
 
       instance.show();
-      enableEscapeListener()
+      enableEscapeListener();
     }
   });
 }
