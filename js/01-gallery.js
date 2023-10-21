@@ -30,9 +30,23 @@ function closeEscapeWindow () {
       });
 }
 
-function removeListenerEscape () {
-   document.removeEventListener("keydown", closeEscapeWindow());
+function onKeydownEscape(event) {
+    event.preventDefault();
+
+    if (event.code === 'Escape') {
+        instance.close();
+    }
 }
+
+function enableEscapeListener() {
+    document.addEventListener('keydown', onKeydownEscape);
+}
+
+
+function removeEscapeListener () {
+   document.removeEventListener("keydown", onKeydownEscape);
+}
+
 function ongalleryContainerClick(evt) {
   evt.preventDefault();
   if (evt.target.nodeName !== "IMG") {
@@ -42,11 +56,15 @@ function ongalleryContainerClick(evt) {
     if (item.original === evt.target.dataset.source) {
       const instance = basicLightbox.create(
         ` <img src=${item.original} width="800" height="600">`
-      );
+      ),{
+            closable: false,
+            onClose: () => {
+                removeEscapeListener();
+            }
+        }
 
       instance.show();
-      closeEscapeWindow()
-     removeListenerEscape()
+      enableEscapeListener()
     }
   });
 }
